@@ -6,6 +6,10 @@
 // slow qsort
 void qsort(void *base, size_t nmemb, size_t size,
            int (*compar)(const void *, const void *)) {
+#ifdef OJHACK_DEBUG
+  std::fprintf(stderr, "ojhack: qsort called nmemb=%zu size=%zu\n", nmemb,
+               size);
+#endif
   for (size_t i = 0; i < nmemb; i++) {
     for (size_t j = 1; j < nmemb; j++) {
       std::swap_ranges((static_cast<char *>(base) + size * (j - 1)),
