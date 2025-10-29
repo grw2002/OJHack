@@ -1,5 +1,5 @@
 CXX = c++
-TESTCXXFLAGS = -DOJHACK_DEBUG -fPIC -O2 -Wall -Wl,-rpath="./build" -Wextra
+TESTCXXFLAGS = -DOJHACK_DEBUG -fPIC -O2 -Wall -Wl,-rpath="./build" -Wextra -Wl,--no-as-needed -ldl
 CXXFLAGS = -fPIC -O2 -Wall -Wextra
 LDFLAGS = $(CXXFLAGS) -shared
 TARGET = libojhack.so
