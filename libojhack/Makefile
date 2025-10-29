@@ -1,4 +1,5 @@
 CXX = c++
+TESTCXXFLAGS = -DOJHACK_DEBUG -fPIC -O2 -Wall -Wl,-rpath="./build" -Wextra
 CXXFLAGS = -fPIC -O2 -Wall -Wextra
 LDFLAGS = $(CXXFLAGS) -shared
 TARGET = libojhack.so
@@ -22,7 +23,7 @@ $(BUILD_DIR)/$(TARGET): $(OBJS) | $(BUILD_DIR)
 	$(CXX) $(LDFLAGS) -o $@ $^
 
 $(TEST_BIN): $(BUILD_DIR) | $(BUILD_DIR)
-	$(CXX) -DOJHACK_DEBUG $(CXXFLAGS) -lojhack -L$(BUILD_DIR) -o $@ $(TEST_SRCS)
+	$(CXX) $(TEST_SRCS) -DOJHACK_DEBUG $(CXXFLAGS) -lojhack -L$(BUILD_DIR) -o $@
 
 $(BUILD_DIR)/%.o: %.cpp | $(BUILD_DIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
@@ -31,6 +32,7 @@ clean:
 	rm -rf $(BUILD_DIR)
 
 .PHONY: all clean test
+test: CXXFLAGS = $(TESTCXXFLAGS)
 
 install: $(TARGET)
 	cp $(TARGET) /usr/local/lib/
